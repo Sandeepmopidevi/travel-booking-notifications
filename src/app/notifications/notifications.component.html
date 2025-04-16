@@ -1,18 +1,13 @@
-<div class="notifications-container">
-    <h2>Notifications</h2>
-  
-    <ul class="notification-list">
-      <li *ngFor="let notification of notifications" [class.unread]="notification.status === 'Unread'">
-        <div class="notification-header">
-          <strong>{{ notification.type }}</strong>
-          <small class="timestamp">{{ notification.timestamp | date: 'short' }}</small>
-        </div>
-        <p>{{ notification.message }}</p>
-  
-        <button *ngIf="notification.status === 'Unread'" (click)="markAsRead(notification)">
-          Mark as Read
-        </button>
-      </li>
-    </ul>
-  </div>
-  
+<h2>Notifications</h2>
+<ul>
+  <li *ngFor="let notification of notifications" [class.unread]="notification.status === 'Unread'">
+    <div class="notification-box">
+      <p>{{ notification.message }}</p>
+      <small class="timestamp">{{ notification.timestamp | date: 'short' }}</small>
+      <button *ngIf="notification.status === 'Unread'" (click)="markAsRead(notification.notificationID)">
+        Mark as Read
+      </button>
+    </div>
+  </li>
+</ul>
+<button (click)="clearAll()">Clear All</button>

@@ -1,15 +1,8 @@
 import { Routes } from '@angular/router';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { NgTemplateOutlet } from '@angular/common';
 
-export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'notifications',
-    pathMatch: 'full'
-  },
-  {
-    path: 'notifications',
-    loadComponent: () =>
-      import('./notifications/notifications.component').then(m => m.NotificationsComponent)
-  }
+export const appRoutes: Routes = [
+  { path: 'notifications', component: NotificationsComponent },
+  { path: '', redirectTo: 'notifications', pathMatch: 'full' }
 ];

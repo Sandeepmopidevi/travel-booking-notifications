@@ -1,9 +1,8 @@
 export interface Notification {
-    notificationId: number;
-    userId: number;
-    type: 'Booking' | 'Payment' | 'Support';
-    message: string;
-    timestamp: string;
-    status: 'Read' | 'Unread';
-  }
-  
+  notificationID: number;
+  userID: number;
+  type: string;
+  message: string;
+  timestamp: string;
+  status: 'Read' | 'Unread';
+}

@@ -1,34 +1,32 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { NotificationService } from './../core/services/notification.service';
+import { Notification } from './../models/notification.model';
 
 @Component({
   selector: 'app-notifications',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
-export class NotificationsComponent {
-  notifications = [
-    {
-      notificationID: 1,
-      userID: 101,
-      type: 'Booking',
-      message: 'Your hotel booking has been confirmed.',
-      timestamp: new Date(),
-      status: 'Unread'
-    },
-    {
-      notificationID: 2,
-      userID: 101,
-      type: 'Payment',
-      message: 'Your payment of ₹4500 was successful.',
-      timestamp: new Date(),
-      status: 'Read'
-    }
-  ];
+export class NotificationsComponent implements OnInit {
+  notifications: Notification[] = [];
+  userId = 1; // Replace with logged-in user ID
 
-  markAsRead(notification: any): void {
-    notification.status = 'Read';
+  constructor(private notificationService: NotificationService) {}
+
+  ngOnInit() {
+    this.loadNotifications();
+  }
+
+  loadNotifications() {
+    this.notificationService.getNotifications(this.userId).subscribe(data => {
+      this.notifications = data;
+    });
+  }
+
+  markAsRead(notificationId: number) {
+    this.notificationService.markAsRead(notificationId).subscribe(() => {
+      const notification = this.notifications.find(n => n.notificationID === notificationId);
+      if (notification) notification.status = 'Read';
+    });
   }
 }
